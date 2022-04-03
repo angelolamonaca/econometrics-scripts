@@ -108,8 +108,39 @@ sum(what * uhat)
 # Dire R² = 0.165 per esempio, significa dire che gli anni di educazione 
 # spiegano circa il 16.5% della variazione del salario orario
 #
+##################
 
-### CAMBIO PERCENTUALE
+
+### CAMBIO PERCENTUALE ###
+#
+## In caso di log-level
 #
 # 100 * B1^ = percentuale di variazione del salario quando l'educazione varia di uno
 #
+##########################
+
+
+### STANDARD ERRORS ###
+#
+# Coefficients:
+#               Estimate    Std. Error    t value   Pr(>|t|)    
+# (Intercept)   -0.90485    0.68497       -1.321    0.187    
+# educ          0.54136     0.05325       10.167    <2e-16 ***
+#
+###
+# Per B1^ lo standard error (0.05325) sará
+# la radice quadrata della varianza dell'errore stimata attraverso i residui 
+# diviso la SST di x
+#
+######################
+
+
+### ERROR STANDARD DEVIATION ###
+# 
+# La deviazione standard dell'errore (sigma quadro) é 3.378
+# Residual standard error: 3.378 on 524 degrees of freedom
+#
+# Calcolata con:
+# radice quadrata(SSR/(n -2))
+#
+################################
