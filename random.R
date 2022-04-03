@@ -59,3 +59,34 @@ apply(strg, 2, mean)
 #
 ######################################################
 
+
+######## CALCOLARE INTERCETTA E COEFFICIENTE MANUALMENTE ##########
+#
+## Creiamo due distribuzioni uniformi y e x
+y <- runif(5, 0,5)
+y
+x <- runif(5, 0,2)
+x
+#
+## Applico la funzione lm a y su x
+mod1 <- lm(y~x)
+summary(mod1)
+#
+## Calcoliamo la covarianza tra x e y
+covxy <- cov(x,y)
+covxy
+#
+## Calcoliamo la varianza di x
+vx <- var(x)
+vx
+#
+## Calcoliamo B1^ (covarianza/varianza)
+hb1 <- covxy/vx
+hb1
+#
+## Calcoliamo B0^ (media di y - hb1 * media di x)
+hb0 <- mean(y) - hb1 * mean(x)
+hb0
+#
+##################################################################
+
