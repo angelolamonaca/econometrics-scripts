@@ -13,6 +13,10 @@ mod1 <- lm(wage ~ educ, data = wage1)
 #
 # Intercetta e coefficiente educ
 coefficients(mod1)
+#
+# lwage = log(wage)
+str(wage1)
+#
 #####################################
 
 
@@ -32,7 +36,17 @@ res
 
 ############ ESERCIZIO 2 ############
 #
-###
+### LOG-LEVEL
+#
+mod2 <- lm(lwage ~ educ, data = wage1)
+summary(mod2)
+#
+## INTEPRETAZIONI
+# Intercept: valore del logaritmo del wage quando educ = 0
+#
+# Coefficiente educ: in un modello log-level (log della dipendente e livello della esplicativa)
+# B1 * 100 = variazione percentuale di Y dovuta ad una variazione di X
+# Quindi ad ogni incremento dell educ di un anno, il salario cresce del 8.27%
 #
 ###
 res

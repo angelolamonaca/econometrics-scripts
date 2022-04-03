@@ -52,6 +52,23 @@ res
 #####################################
 
 
+############ ESERCIZIO 3 ############
+#
+### LOG-LOG 
+## Interpretare log(salary) e log(sales)
+#
+# Variazione percentuale del salario rispetto 
+# alla variazione percentuale delle vendite
+#
+mod3 <- lm(lsalary ~ lsales, data = ceosal1)
+res <- summary(mod3)
+#
+### Se le vendite aumentano dell'1%, il salario del CEO aumenta del 0.25%
+res
+#
+#####################################
+
+
 
 ############ ESERCIZIO X ############
 #
