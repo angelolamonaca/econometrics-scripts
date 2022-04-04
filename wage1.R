@@ -33,10 +33,8 @@ res
 #
 #####################################
 
-
+LOG-LEVEL
 ############ ESERCIZIO 2 ############
-#
-### LOG-LEVEL
 #
 mod2 <- lm(lwage ~ educ, data = wage1)
 summary(mod2)
@@ -52,6 +50,30 @@ summary(mod2)
 res
 #
 #####################################
+
+LOG-LEVEL
+#### ESERCIZIO 3 - PARTIALLING OUT ####
+#
+### Using the 526 observations on workers in wage1, we include educ, exper, and tenure in an equation explaining log(wage).
+### Confirm the partialling out interpretation of the OLS estimates by explicity doing the partialling out with respect to educ.
+#
+mod <- lm(lwage ~ educ + exper + tenure, data=wage1)
+summary(mod)
+#
+# Per fare il partialling out devo fare una regressione di educ su tutte le altre variabili esplicative del modello (exper, tenure)
+pmod <- lm(educ ~ exper + tenure, data=wage1)
+# Prendere i residui di questo modello
+uh <- residuals(pmod)
+# Fare una regressione della variabile dipendente log(wage) su questi residui
+res <- lm(lwage ~ uh, data=wage1)
+summary(res)
+# Otterró un coefficiente che é lo stesso coefficiente che otterrei da una regressione lineare multipla 
+# dove log(wage) e le variabili indipendenti sono tutte e 3 nel modello
+#
+###
+res
+#
+#######################################
 
 
 
