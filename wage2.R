@@ -95,3 +95,44 @@ summary(ols)
 # QI spiega neanche l'un percento della variabilitá di wage
 #
 #######################################
+
+
+############# EQUAZIONE DATA - GIVEN EQUATION #############
+#
+##### educ^ = 10.36 - .094sibs + .131meduc + .210feduc;   n = 722,    R² = .214
+# where educ is years of schooling, sibs is number of siblings, meduc is mother's years of schooling, and feduc is father's years of schooling.
+# dove educ sono gli anni di studio, sibs é il numero di fratelli/sorelle, meduc gli anni di studio della madre e feduc gli anni di studio del padre
+#
+### Does sibs have the expected effect? Explain.
+# Se la famiglia non é particolarmente facoltosa, magari quando ci sono piú figli 
+# si investe su quello piú capace, quindi avere fratelli e sorelle e mantenerli 
+# tutti all'universitá con i vari costi diventa piú difficile. Quindi se sei figlio 
+# unico sei avvantaggiato perché non hai questa competizione interna nella famiglia.
+# Quindi il segno negativo in sibs é giustificato
+#
+#
+### Holding meduc and feduc fixed, by how much does sibs have to increase to reduce 
+### predicted years of education by one year? (A noninteger answer is acceptable here)
+1/0.094
+# Questo risultato sembra dire che, guardando questo campione, la variabile siblings non é il massimo per spiegare gli anni di educazione dell'individuo
+#
+#
+### Discuss the interpretation of the coefficient on meduc
+### Discuti l'interpretazione dle coefficiente della variabile meduc
+# In base a questo campione, ogni 10 anni di incremento degli studi della madre, tenendo fisse le altre variabili (ceteris paribus), porta un incremento dell'educazione del figlio pari a 2 anni
+#
+#
+#
+##### Suppose that Man A has no siblings, and his mother and father each have 12 years of education, and Man B has no siblings, and his mother and father each have 16 years of education.
+##### What is the predicted difference in years of education between B and A?
+##### Supponiamo che l'individuo A non ha fratelli, ed i suoi genitori hanno entrambi 12 anni di educazione,
+##### e che l'individuo B non ha fratelli e che i suoi genitori hanno ciascuno 16 anni di educazione.
+##### Qual'é la differenza predetta in anni di educazione tra B e A?
+
+## calcolare le educazioni predette dei due individui e fare la differenza
+educA <- 10.36 - 0 + .131 * 12 + .210 * 12
+educB <- 10.36 - 0 + .131 * 16 + .210 * 16
+difference <- educB - educA
+difference
+#
+############################################################ 
