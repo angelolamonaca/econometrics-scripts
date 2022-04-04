@@ -90,3 +90,78 @@ hb0
 #
 ##################################################################
 
+
+############################### EXERCISES ###########################
+
+##### DISTRIBUZIONE UNIFORME - MEDIA E DEVIAZIONE STANDARD #######
+##### Uniform distribution - mean and standard deviation
+#
+## Genera 500 osservazioni di x (variabile esplicativa) da una distribuzione 
+# uniforme con range [0-10].
+# Start generating 500 observations on x - the explanatory variable - 
+# from the uniform distribution with range [0-10].
+x <- runif(500, 0,10)
+#
+## Quanto é la media di x?
+# What is the sample mean?
+mean(x)
+# La media é circa: (A+B)/2 ovvero (10+0)/2
+#
+## Quanto é la deviazione standard di x?
+# What is the sample standard deviation?
+sd(x)
+# La deviazione standard é circa: radice ( (A+B)² / 12 )
+#
+##################################################################
+
+
+##### DISTRIBUZIONE NORMALE - MEDIA E DEVIAZIONE STANDARD ######
+##### Normal distribution - mean and standard deviation
+#
+## Genera 500 errori, ui, dalla distrubuzione Normale(0.36).
+# Randomly generate 500 errors, ui, from the Normal(0,36) distribution.
+u <- rnorm(500, mean=0, sd=6) # sd la scegliamo facendo sd(x)²
+#
+## La media di u é esattamente 0?
+# Is the sample average of the ui exactly 0?
+mean(u)
+# No, perché questa é una pseudo random generation, é impossibile generare un 
+# vettore con esattamente media 0
+#
+## Quale é la deviazione standard di u?
+# What is the sample standard deviation of the u?
+sd(u)
+# Dovremmo aspettarci una sd di 6, invece é leggermente diversa
+#
+################################################################
+
+
+########## OLS - INTERCEPT, SLOPE - EXPLANATION ###############
+# Now, generate the y as
+# y = 1+2x + u
+# that is, the population intercept is one and the population slope is two.
+# Use the data to run the regression of y on x.
+y <- 1 + 2*x + u
+ols <- lm(y ~ x)
+summary(ols)
+#
+# What are your estimates of the intercept and slope?
+coefficients(ols)
+#
+# Are they equal to the population values in the above equation?
+# I coefficienti non saranno mai uguali a 1 e 2 perché la proprietá di unbiasness 
+# é una proprietá dello stimatore e non della stima
+#
+###############################################################
+
+
+########### OLS Residuals ############
+### Obtain the OLS residuals, u, and verify that they sum to zero (subject to rounding error)
+sum(residuals(ols))
+# 
+# La somma dei residui di questo modello lineare é praticamente 0 
+# (attenzione: quando si verifica l'errore e- vuol dire ZERO)
+#
+#####################################
+
+

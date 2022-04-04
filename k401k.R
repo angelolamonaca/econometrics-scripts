@@ -25,7 +25,7 @@ str(k401k)
 
 
 
-############################### ESERCISES ###########################
+############################### EXERCISES ###########################
 
 ########### MEDIA - AVERAGE ############ 
 #
@@ -39,7 +39,7 @@ mean(k401k$mrate)
 #
 #######################################
 
-
+LEVEL-LEVEL
 #### INTERPRETAZIONE - INTERPRETATION #####
 #
 # Stimare l'equazione di regressione semplice e riportare i risultati includendo
@@ -90,14 +90,13 @@ res
 ######################################################################
 
 
-##### CALCOLA QUANTO LA VARIAZIONE DI prate É SPIEGATA DA mrate (molto?) ####
+####### CALCOLA QUANTO LA VARIAZIONE DI prate É SPIEGATA DA mrate (molto?) #######
 ### How much of the variation in prate is explained by mrate? Is a lot?
 #
 # Dobbiamo guardare R quadrato
 summary(ols)
 # In questo modello é 0.0747 ed é un valore bassissimo (0 <= R² <= 1)
 # mrate spiega neanche l'un percento della variabilitá di prate
-#
 #
 ##################################################################################
 
