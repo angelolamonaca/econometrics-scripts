@@ -78,3 +78,130 @@ summary(ols2)
 #
 ###########################################################################
 
+
+LOG-LOG
+########### CONSTANT ELASTICITRY VARIETY FOR BOTH independent variable #####
+#### Estimate a model relating annual salary to firm sales and market avlue.
+#### Make the model of the constant elasticity variety for both independent variables.
+#### Write the results out in equation form.
+### Stima un modello che mette in relazione il salario annuale con le vendite e la variabile market value.
+### Vista la richiesta della varietá elastica costante, dovremo utilizzare un modello log-log
+#
+# Nel nostro dataset abbiamo giá tutti i logaritmi delle variabili che ci servono
+mod <- lm(lsalary ~ lsales + lmktval, data = ceosal2)
+summary(mod)
+#
+#### Interpretazione
+# Sappiamo che é un modello LOG-LOG-LOG quindi l'interpretazione dei Beta ceteris paribus é la seguente:
+# Il Beta misura la variazione percentuale della Y dovuta ad una variazione percentuale della X
+# 
+# Coefficients:
+#                 Estimate   
+# (Intercept)     4.62092    
+#   lsales        0.16213    
+#   lmktval       0.10671     
+#
+# Ceteris paribus, tenendo le altre variabili fisse, l'aumento dell'1% delle vendite, comporta l'aumento del salario del CEO del 0.16%
+# Ceteris paribus, tenendo le altre variabili fisse, l'aumento dell'1% del market value, comporta l'aumento del salario del CEO del 0.11%
+#
+#
+#### Quanta variabilitá riusciamo a spiegare della Y?
+# R² ovvero 0.3, le variabili considerate, nonostante siano poche, spiegano in modo abbastanza soddisfaciente la Y
+#
+#
+### Matrice di varianza e covarianza dei Beta stimati
+#
+# 1) Prendiamo i residui
+u <- residuals(mod)
+# 2) Calcoliamo sigma² (stimatore della varianza dell'errore)
+# crossprod(residui)/degrees_of_freedom
+s2 <- crossprod(u)/(174)
+s2
+# 3) Generiamo la x
+x <- cbind(1, ceosal2$lsales, ceosal2$lmktval)
+head(x)
+# 4) Calcoliamo x primo x
+xpx <- crossprod(x)
+# 5) Facciamo l'inverso
+xpxi <- solve(xpx)
+xpxi
+# 6) Calcoliamo la matrice di varianza e covarianza 
+vcbetas <- as.numeric(s2) * xpxi
+# usiamo as.numeric per convertire la matrice 1x1 in un numero
+vcbetas
+#
+# vcbetas[1,1] : varianza dell'intercetta
+vintercept <- vcbetas[1,1]
+vintercept
+#
+# vcbetas[2,2] : varianza del beta 1 (coefficiente dei log sales)
+vb1 <- vcbetas[2,2]
+vb1
+# vcbetas[2,3] : covarianza tra lsales e lmkval
+cb2b3 <- vcbetas[2,3]
+cb2b3
+# 7) Calcoliamo gli standard errors
+serrors <- sqrt(diag(vcbetas))
+# Questi valori sono quelli che troviamo nel summary del modello
+#
+#
+### Un modo rapido per estrarre la matrice di varianza e covarianza é l'utilizzo della funzione vcov
+vcbetas2 <- vcov(mod)
+vcbetas2
+#
+#
+########## ADD VARIABLE TO THE MODEL IN LOGARITHMIC FORM ##################
+### Add profits to the previous model. 
+mod2 <- lm(lsalary ~ lsales + lmktval + profits, data=ceosal2)
+summary(mod2)
+#
+#
+### Why can this variable not be included in logarithmic form?
+# Se una variabile ha valori negativi non si puó prendere il logaritmo
+summary(ceosal2$profits)
+# profits ha il minimo di -463, negativo! Quindi non possiamo prendere il logaritmo della variabile profits e non avrebbe senso prenderlo
+#
+#
+### Would you say that these firm performance variables explain most of the variation in CEO salaries?
+# il coefficiente di profits é 3.566e-05 che sarebbe 0.00003566, praticamente 0
+# Quindi non spiega la variazione del salario
+#
+# il coefficiente di lsales é 1.614e-01, ovvero 0.1614 e rimane quasi invariato rispetto alla short form
+# il coefficiente lmktval é 9.753e-02, ovvero 0.09753 e diminuisce anch'esso di pochissimo
+# possiamo spiegare questa diminuizione per via del fatto che abbiamo introdotto una variabile il cui effetto é positivo
+# perché entrambe (lsales e lmktval) stavano prendendo una parte del profitto, prima di inserire quest'ultima nel modello
+#
+#
+######## ADD VARIABLE - ESTIMATED PERCENTAGE RETURN ######################
+#### Add the variable ceoten to the model.
+#### What is the estimated percentage return for another year of CEO tenure, holding other factors fixed?
+#
+mod3 <- lm(lsalary ~ lsales + lmktval + profits + ceoten, data=ceosal2)
+summary(mod3)
+#
+# coefficiente di ceoten = 1.168e-02 ovvero 0.01168
+# LOG-LEVEL! quindi nell'interpretazione dobbiamo moltiplicare * 100
+#
+# Ceteris paribus, cioé tenendo tutte le altre variabili fisse, l'effetto di ceo tenure
+# sul salario del CEO é:
+# all'aumentare di un anno del CEO tenure, il salario aumenta del 1.16%
+#
+# L'incremento é basso, non copre nemmeno l'inflazione
+#
+#
+#
+################# SAMPLE CORRELATION COEFFICIENT ##############
+#### Find the sample correlation coefficient between the variables log (mktval) and profits.
+### Dobbiamo calcolare la correlazione tra lmktval e profits
+cor(ceosal2$lmktval, ceosal2$profits)
+#
+#### Are these variables highly correlated?
+# La correlazione é di 0.78, é altissima.
+#
+#### What does this say about the OLS estimators?
+# Un aspetto é che, se sono altamente correlate ma non perfettamente, aiuta a spiegare la variabilitá della Y.
+# Un alta correlazione tra i regressori puó portare ad una varianza che é piú alta
+#
+###########################################################################
+
+
