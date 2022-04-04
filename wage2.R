@@ -11,6 +11,42 @@ str(wage2)
 # 
 #####################################
 
+LOG-LEVEL
+########### INTERPRETAZIONE ##########
+#
+ols <- lm(lwage ~ educ, data = wage2)
+summary(ols)
+#
+# Intercetta = a 5.97 sui modelli log-level é quello che ci interessa meno
+# É molto interessante vedere l'effetto del coefficiente di educazione B1^, 
+# perché ci dice che per ogni anno in piú id educazione il salario cresce di 5.9% (essendo log-level si fa * 100)
+#
+# R² é basso perché c'é un unica variabile esplicativa, anche se 0.097 non é poco
+#
+## Aggiungiamo IQ al modello
+ols2 <- lm(lwage ~ educ + IQ, data = wage2)
+summary(ols2)
+#
+# Intercetta non cambia molto
+# Il coefficiente educazione si é abbassato e per ogni anno in piú di educazione, se tutte le altre variabili restano fisse (ceteris paribus), il salario aumenta del 4%
+# Il coefficiente di IQ ci dice che all'aumentare di 10 punti IQ,  se tutte le altre variabili restano fisse (ceteris paribus), il salario aumenta del 5.8%
+# R² é aumentato (di fatti non puó diminuire all'aumentare delle variabili nel modello, al piú resta uguale)
+#
+# IMPORTANTE: A paritá di variabili tra due soggetti (ceteris paribus)
+# Abbiamo due soggetti A e B che hanno lo stesso IQ (55 per esempio)
+# Se uno di loro ha studiato un anno piú dell'altro vuol dire che quell'individuo avrá il 3.9% in piú del salario rispetto all'altro
+#
+#
+# Perché il coefficiente di educazione diminuisce quando si aggiunge IQ?
+# Essendo IQ un coefficiente positivo, quando non lo stavamo considerando nel modello
+# stavamo attribuendo il valore di IQ ad educ
+#
+# Calcoliamo la correlazione tra educ e IQ
+cor(wage2$educ, wage2$IQ)
+# La correlazione é positiva
+#
+#####################################
+
 
 ############################### EXERCISES ###########################
 
