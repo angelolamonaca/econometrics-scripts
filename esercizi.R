@@ -247,3 +247,174 @@ summary(mod)
 mod2 <- lm(psoda ~ prpblck, data=discrim)
 summary(mod2)
 
+
+
+library(wooldridge)
+
+
+
+data(discrim)
+help(discrim)
+summary(discrim$prpblck)
+#Find the average values of prpblck and income in the sample, along with their
+# standard deviations. What are the units of measurement of prpblck and income?
+mean(discrim$prpblck, na.rm = T)
+mean(discrim$income, na.rm = T)
+# la media di prpblck é 0.11
+# la media di income é 47054
+
+
+
+sd(discrim$prpblck, na.rm = T)
+sd(discrim$income, na.rm = T)
+# la deviazione standard di prpblck é 0.18
+# la deviazione standard di income é 13179
+
+
+
+# prpblck é in percentuale
+# income é in dollari
+
+
+
+
+
+# Consider a model to explain the price of soda, psoda, in terms of the proportion of
+# the population that is black and median income:
+# psoda 5 b0 1 b1prpblck 1 b2income 1 u.
+# Estimate this model by OLS and report the results in equation form, including the
+# sample size and R-squared.
+mod <- lm(psoda ~ prpblck + income, data = discrim)
+summary(mod)
+# psoda = 0.95 + 0.12prpblck + 0.0000016income
+# la sample size é di 410 osservazioni
+# R² é pari a 0.064
+
+
+
+
+# Interpret the coefficient on prpblck. Do you think it is economically large?
+# All'aumentare del 10% sul rapporto neri/popolazione, il prezzo della soda aumenterá di 11 cents
+
+
+# A model with a constant price elasticity with respect to income may be more
+# appropriate. Report estimates of the model
+# log(psoda) 5 b0 1 b1prpblck 1 b2log(income) 1 u.
+# If prpblck increases by .20 (20 percentage points), what is the estimated percentage change in psoda? (Hint: The answer is 2.xx, where you fill in the "xx.")
+
+
+
+mod3 <- lm(lpsoda ~ prpblck + lincome, data = discrim)
+summary(mod3)
+0.12158/100
+0.0012158*100
+0.12158*20
+# al variare dell'1% del prpblck il prezzo della soda aumenterà di =0,12% (in ceteris paribus)
+# aumentando il prpblack di 20% e tenendo ceteris paribus le altre variabili il prezzo della soda aumenterà del 2.43%.
+
+
+
+# Now add the variable prppov to the regression in part (iv). What happens
+# to b^prpblck?
+
+mod4 <- lm(lpsoda ~ prpblck + lincome + prppov, data = discrim )
+summary(mod4)
+a <- na.omit(discrim$prppov)
+b <- na.omit(discrim$prpblck)
+cor(a, b )
+# il valore di prpblck è diminuito perchè in assenza di prppov, prpblck includeva in esso parte della variazione di prppov
+
+
+
+# Find the correlation between log(income) and prppov. Is it roughly what you
+# expected?
+
+
+
+cor(na.omit(discrim$lincome), na.omit(discrim$prppov))
+# si mi aspettavo questa forte correlazione negativa perchè aumentando il reddito ci si aspetta una diminuzione di povertà
+
+
+
+# Evaluate the following statement: "Because log(income) and prppov are so highly
+# correlated, they have no business being in the same regression."
+
+
+
+#secondo me avere queste due variabil nello stesso modello consente al modello di spiegare leggermente meglio il prezzo della soda, ma in minimam parte perche l'R-square è aumnetato di 0,018
+
+
+
+
+library(wooldridge)
+data("charity")
+
+
+
+# Use the data in CHARITY.RAW to answer the following questions:
+# (i) Estimate the equation
+# gift 5 b0 1 b1mailsyear 1 b2giftlast 1 b3propresp 1 u
+# by OLS and report the results in the usual way, including the sample size and
+# R-squared. How does the R-squared compare with that from the simple regression
+# that omits giftlast and propresp?
+
+
+
+ols <- lm(gift ~ mailsyear + giftlast + propresp, data = charity)
+summary(ols)
+
+
+
+#semple size = 4268
+#R-squared = 0,08336
+
+
+
+ols2 <- lm(gift ~ mailsyear, data = charity)
+summary(ols2)
+
+
+
+#comparando i due modelli notiamo che l'R-squared del modello semplice diminuisce di 0,07 abbassando notevolmente il livello di significativita del modello
+
+
+
+#Interpret the coefficient on mailsyear. Is it bigger or smaller than the corresponding simple regression coefficient?
+
+
+
+#il coefficiente di mailsyear e piu piccolo rispetto al coefficiente nel modello lineare semplice perchè in quest'ultimo esso si fa carico di rappresentare parte delle due variabili omesse
+
+
+
+#Interpret the coefficient on propresp. Be careful to notice the units of measurement of propresp
+
+
+
+summary(charity$propresp)
+summary(charity$gift)
+#in condizione di ceteris paribus, all'aumentare del 1% della percentuale di risposte il numero di gift aumeteran di 0.15
+
+
+
+# Now add the variable avggift to the equation. What happens to the estimated effect
+# of mailsyear?
+
+
+
+ols3 <- lm(gift ~ mailsyear + giftlast + propresp + avggift, data = charity)
+summary(ols3)
+
+
+
+#il coefficiente mailsyear aggiungendo avggift nel modello si è notevolmente abbasato dimezzandosi, da cio si deduce che mailsyear si faceva carico anche di parte dell'influenza di avggift. inoltre possiamo dire che l'aggiunta di avggift fa aumentare l'R-squared considerevolmente rendendolo notevolmente piu significativo.
+
+
+
+
+# In the equation from part (iv), what has happened to the coefficient on giftlast?
+# What do you think is happening?
+
+
+
+#notiamo che aggiungendo avggift al modello il coefficiente giftlast è passato da un valore positivo prossimo allo 0 ad un valore negativo di -0,26. da questo possiamo dedurre che in assenza di avggif giftlast si fa carico di parte della sua influenza
